@@ -1,30 +1,40 @@
-import * as linez from 'linez';
-import * as _ from 'lodash';
-import * as eclint from './eclint';
+import * as linez from "linez";
+import * as _ from "lodash";
+import * as eclint from "./eclint";
 
 function updateDoc(doc: IDocument, settings?: eclint.ISettings): IDocument {
 	doc.lines = doc.lines.map((rawLine: linez.Line) => {
 		return new Line(rawLine, doc);
 	});
 
-	if (!settings || !settings.block_comment_start || !settings.block_comment_end) {
+	if (
+		!settings ||
+		!settings.block_comment_start ||
+		!settings.block_comment_end
+	) {
 		return doc;
 	}
 
 	let block_comment = settings.block_comment;
 
-	if (!block_comment &&
-		settings.block_comment_start[settings.block_comment_start.length - 1] === settings.block_comment_end[0]
+	if (
+		!block_comment &&
+		settings.block_comment_start[
+			settings.block_comment_start.length - 1
+		] === settings.block_comment_end[0]
 	) {
 		block_comment = settings.block_comment_end[0];
 	}
 
 	let padSize = 0;
 	if (block_comment) {
-		padSize = Math.max(0, settings.block_comment_start.indexOf(block_comment));
+		padSize = Math.max(
+			0,
+			settings.block_comment_start.indexOf(block_comment)
+		);
 	}
 
-	let docCommentLines: null|Line[];
+	let docCommentLines: null | Line[];
 	doc.lines.forEach((line: Line) => {
 		if (_.startsWith(line.string, settings.block_comment_start)) {
 			docCommentLines = [line];
@@ -33,12 +43,18 @@ function updateDoc(doc: IDocument, settings?: eclint.ISettings): IDocument {
 				const blockCommentStart = docCommentLines[0];
 				blockCommentStart.isBlockCommentStart = true;
 				const commentStartWidth = settings.block_comment_start.length;
-				let currPadSize = /^\s*/.exec(blockCommentStart.string.slice(commentStartWidth))[0].length || 1;
+				let currPadSize =
+					/^\s*/.exec(
+						blockCommentStart.string.slice(commentStartWidth)
+					)[0].length || 1;
 				currPadSize += commentStartWidth;
 				line.isBlockCommentEnd = true;
 				docCommentLines.push(line);
 				docCommentLines.forEach((docCommentLine) => {
-					if (block_comment && _.startsWith(docCommentLine.string, block_comment)) {
+					if (
+						block_comment &&
+						_.startsWith(docCommentLine.string, block_comment)
+					) {
 						docCommentLine.padSize = padSize;
 						docCommentLine.isBlockComment = true;
 					} else if (docCommentLine.isBlockCommentStart) {
@@ -85,8 +101,8 @@ export class Line implements linez.Line {
 			this.string = textArray[2];
 			this.suffix = textArray[3];
 		} else {
-			this.prefix = '';
-			this.string = '';
+			this.prefix = "";
+			this.string = "";
 			this.suffix = text;
 		}
 	}
@@ -95,8 +111,11 @@ export class Line implements linez.Line {
 	}
 }
 
-export function create(file: string|Buffer, settings?: eclint.ISettings): IDocument {
-	const document = ((linez as any)(file)) as IDocument;
+export function create(
+	file: string | Buffer,
+	settings?: eclint.ISettings
+): IDocument {
+	const document = (linez as any)(file) as IDocument;
 	updateDoc(document, settings);
 	return document;
 }

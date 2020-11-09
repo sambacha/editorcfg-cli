@@ -1,25 +1,17 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended"
-  ],
+  "extends": ["tslint:recommended"],
   "rules": {
     "class-name": true,
     "curly": true,
     "eofline": true,
-    "forin":false,
+    "forin": false,
     "indent": [true, "tabs"],
     "label-position": true,
     "max-line-length": [true, 120],
     "no-arg": true,
     "no-bitwise": true,
-    "no-console": [true,
-        "debug",
-        "info",
-        "time",
-        "timeEnd",
-        "trace"
-    ],
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
@@ -27,25 +19,24 @@
     "no-eval": true,
     "no-string-literal": true,
     "no-trailing-whitespace": true,
-    "one-line": [true,
-        "check-open-brace",
-        "check-catch",
-        "check-else",
-        "check-whitespace"
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
     ],
     "quotemark": [true, "single", "avoid-escape"],
     "radix": true,
-    "semicolon": [
-      true,
-      "always"
-    ],
+    "semicolon": [true, "always"],
     "triple-equals": [true, "allow-null-check"],
     "variable-name": false,
-    "whitespace": [true,
-        "check-branch",
-        "check-decl",
-        "check-operator",
-        "check-type"
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-type"
     ]
   }
 }

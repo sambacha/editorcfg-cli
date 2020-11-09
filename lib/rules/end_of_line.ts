@@ -1,24 +1,24 @@
-import * as doc from '../doc';
-import * as eclint from '../eclint';
-import EditorConfigError = require('../editor-config-error');
+import * as doc from "../doc";
+import * as eclint from "../eclint";
+import EditorConfigError = require("../editor-config-error");
 
 const newlines = {
-	'\n': 'lf',
-	'\r': 'cr',
-	'\r\n': 'crlf',
-	'cr': '\r',
-	'crlf': '\r\n',
-	'lf': '\n',
+	"\n": "lf",
+	"\r": "cr",
+	"\r\n": "crlf",
+	cr: "\r",
+	crlf: "\r\n",
+	lf: "\n",
 };
 
 function resolve(settings: eclint.ISettings) {
 	switch (settings.end_of_line) {
-		case 'lf':
-		case 'crlf':
-		case 'cr':
+		case "lf":
+		case "crlf":
+		case "cr":
 			return settings.end_of_line;
 		default:
-			return void (0);
+			return void 0;
 	}
 }
 
@@ -33,13 +33,13 @@ function check(settings: eclint.ISettings, line: doc.Line) {
 	}
 	if (inferredSetting !== configSetting) {
 		const error = new EditorConfigError(
-			'invalid newline: %s, expected: %s',
+			"invalid newline: %s, expected: %s",
 			inferredSetting,
-			configSetting,
+			configSetting
 		);
 		error.lineNumber = line.number;
 		error.columnNumber = line.text.length + 1;
-		error.rule = 'end_of_line';
+		error.rule = "end_of_line";
 		error.source = line.text + line.ending;
 		return error;
 	}
@@ -62,7 +62,7 @@ const EndOfLineRule: eclint.ILineRule = {
 	fix,
 	infer,
 	resolve,
-	type: 'LineRule',
+	type: "LineRule",
 };
 
 export = EndOfLineRule;

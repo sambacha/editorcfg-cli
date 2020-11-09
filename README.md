@@ -14,13 +14,11 @@ ECLint is a tool for validating or fixing code that doesn't adhere to settings d
 
 This version of ECLint runs on [EditorConfig Core](https://www.npmjs.com/package/editorconfig) 0.15.x.
 
-
 ## Installation
 
 ```bash
 $ npm install [-g] eclint
 ```
-
 
 ## Features
 
@@ -36,7 +34,6 @@ $ npm install [-g] eclint
   - [max_line_length (unofficial)](#max_line_length-unofficial)
 - [TypeScript/JavaScript API](#api)
 - [Gulp plugin](#gulp-plugin)
-
 
 ## CLI
 
@@ -57,7 +54,6 @@ Options:
   --help     Show help                                                 [boolean]
   --version  Show version number                                       [boolean]
 ```
-
 
 ## Check
 
@@ -107,7 +103,6 @@ This is the same method this project is doing in its own [.travis.yml file](http
 
 Now should be a great time to segue into the [fix sub-command](#fix).
 
-
 ## Fix
 
 <table>
@@ -147,7 +142,6 @@ Options:
 You might notice this sub-command looks very similar to the [check sub-command](#check). It works essentially the same way; except, instead of validating files, it enforces the settings on each file by altering their contents. I'll let you read the [check sub-command](#check) so I don't have to repeat myself.
 
 One key difference you'll notice is an additional `-d, --dest <folder>` option. This option gives you control over where the result file tree will be written. Without this specified, the files will be overwritten in the source location by default.
-
 
 ## Infer
 
@@ -204,7 +198,7 @@ Outputs:
   },
   "indent_size": {
     "0": 21,
-    "tab":13
+    "tab": 13
   },
   "trim_trailing_whitespace": {
     "true": 34
@@ -258,6 +252,7 @@ max_line_length = 90
 ```bash
 $ env eclint check $(git ls-files)
 ```
+
 for compatible with Windows, you can install [exec-extra](https://github.com/gucong3000/exec-extra)
 
 ## Locales currently supported:
@@ -270,10 +265,10 @@ for compatible with Windows, you can install [exec-extra](https://github.com/guc
 
 All EditorConfig rules are supported. Additionally, the [max_line_length](#max-line-length) rule has been added to the set. This is not an official EditorConfig setting, so it's possible it may be removed in the future. For now, it's has a basic use in this tool.
 
-
 ### charset
 
 At this time, only the following encodings are supported:
+
 - latin1 (partial support)
 - utf-8
 - utf-8-bom (not actually an encoding, but it does have a BOM signature)
@@ -281,6 +276,7 @@ At this time, only the following encodings are supported:
 - utf-16be
 
 Unsupported encodings:
+
 - utf-32le
 - utf-32be
 - everything else
@@ -303,10 +299,10 @@ Fixes supported charsets by adding or removing BOM signatures and encoding the t
 
 Only infers documents with BOM signatures. No other assumptions made at this time.
 
-
 ### indent_style
 
 Supported settings:
+
 - space
 - tab
 
@@ -333,10 +329,10 @@ The fix method can fix indentation in the following ways:
 
 Looks at the first character of each line to determine the strongest trend in your file.
 
-
 ### indent_size
 
 Supported settings:
+
 - An integer
 - tab (pulls value from [tab_width](#tab_width))
 
@@ -355,18 +351,18 @@ Fixing indent size issues without any knowledge of the written language or synta
 
 If the first character in a line is a tab, the indent size will be undefined. If it's spaces, however, I count backwards from 8 to 1, dividing the number of leading spaces by this number. If there is no remainder, that number is inferred as the indent size. Every line is tallied up with a score for each possible indent size and the highest score wins for the document. I've found this method to be extremely reliable.
 
-
 ### tab_width
 
 Supported settings:
+
 - An integer
 
 This tool only uses `tab_width` as a fallback for `indent_size`.
 
-
 ### trim_trailing_whitespace
 
 Supported settings:
+
 - true
 
 ##### check
@@ -383,10 +379,10 @@ When `true`, removes trailing whitespace. Anything other than `true` is ignored.
 
 Infers `true` if no trailing whitespace is found. Infers `undefined` otherwise. Does not infer `false` under any scenarios.
 
-
 ### end_of_line
 
 Supported settings:
+
 - lf
 - cr
 - crlf
@@ -405,10 +401,10 @@ Replaces all invalid newlines with the one defined in your configuration.
 
 Infers the most popular newline found in each document.
 
-
 ### insert_final_newline
 
 Supported settings:
+
 - true
 - false
 
@@ -428,10 +424,10 @@ Reports the following errors:
 - Infers `true` when no newlines are found at the end of the file.
 - Infers `false` when a newline is found at the end of the file.
 
-
 ### max_line_length (unofficial)
 
 Supported settings:
+
 - An integer
 
 ##### check
@@ -463,6 +459,7 @@ Defines the end of block comments
 ## Support for doc comments
 
 When you use doc comments, eclint might report a error with your indentation style. At this case, you need to defines the style of the doc comments you are using in `.editorconfig`:
+
 ```
 [*]
 # C-style doc comments
@@ -478,66 +475,56 @@ This project's API is written in [TypeScript](http://www.typescriptlang.org/), a
 If you have an IDE that supports TypeScript, this saves you time by letting you stay in your editor instead of constantly looking up documentation online to figure out the arguments, types and interfaces you can pass-in to API functions.
 
 ```ts
-import * as eclint from 'eclint';
+import * as eclint from "eclint";
 ```
 
 In JavaScript, you just need to require the package:
 
 ```js
-var eclint = require('eclint');
+var eclint = require("eclint");
 ```
 
 Now, you can pipe streams to the respective [check](#check), [fix](#fix) and [infer](#infer) sub-commands. Refer to [cli.ts](https://github.com/jedmao/eclint/blob/master/lib/cli.ts) for a working example of doing just that.
-
 
 ## Gulp Plugin
 
 The [check](#check), [fix](#fix) and [infer](#infer) API commands are all [Gulp](http://gulpjs.com/) [plugins](http://gulpjs.com/plugins/). Here's an example of how you might use them:
 
 ```js
-var gulp = require('gulp');
-var eclint = require('eclint');
-var reporter = require('gulp-reporter');
-var path = require('path');
+var gulp = require("gulp");
+var eclint = require("eclint");
+var reporter = require("gulp-reporter");
+var path = require("path");
 
-gulp.task('check', function() {
-  return gulp.src([
-      '*',
-      'lib/**/*.js'
-    ])
-    .pipe(eclint.check())
-    .pipe(reporter());
+gulp.task("check", function () {
+  return gulp.src(["*", "lib/**/*.js"]).pipe(eclint.check()).pipe(reporter());
 });
 
-gulp.task('fix', function() {
-  return gulp.src([
-      '*',
-      'lib/**/*.js'
-    ],
-    {
-      base: './'
+gulp.task("fix", function () {
+  return gulp
+    .src(["*", "lib/**/*.js"], {
+      base: "./",
     })
     .pipe(eclint.fix())
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest("."));
 });
 
-gulp.task('infer', function() {
-  return gulp.src([
-      '*',
-      'lib/**/*.js'
-    ])
-    .pipe(eclint.infer({
-      ini: true,
-      root: true
-    }))
-    .pipe(gulp.dest('.editorconfig'));
+gulp.task("infer", function () {
+  return gulp
+    .src(["*", "lib/**/*.js"])
+    .pipe(
+      eclint.infer({
+        ini: true,
+        root: true,
+      })
+    )
+    .pipe(gulp.dest(".editorconfig"));
 });
 ```
 
 Have a look at this project's [check](https://github.com/jedmao/eclint/blob/master/tasks/check.js) and [fix](https://github.com/jedmao/eclint/blob/master/tasks/fix.js) tasks for a working example. Notice that the check tasks exits with an exit code of `1`. This is to fail whatever continuous integration you may have in place.
 
-
 ## Related Projects
 
-* [editorconfig-tools](https://github.com/treyhunner/editorconfig-tools)
-* [EditorConfig-Action](https://github.com/marketplace/actions/editorconfig-action)
+- [editorconfig-tools](https://github.com/treyhunner/editorconfig-tools)
+- [EditorConfig-Action](https://github.com/marketplace/actions/editorconfig-action)

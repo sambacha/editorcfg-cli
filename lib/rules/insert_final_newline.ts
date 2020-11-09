@@ -1,20 +1,20 @@
-import * as _ from 'lodash';
-import * as doc from '../doc';
+import * as _ from "lodash";
+import * as doc from "../doc";
 
-import * as eclint from '../eclint';
-import EditorConfigError = require('../editor-config-error');
+import * as eclint from "../eclint";
+import EditorConfigError = require("../editor-config-error");
 
 const newlines = {
-	cr: '\r',
-	crlf: '\r\n',
-	lf: '\n',
+	cr: "\r",
+	crlf: "\r\n",
+	lf: "\n",
 };
 
 function resolve(settings: eclint.ISettings) {
 	if (_.isBoolean(settings.insert_final_newline)) {
 		return settings.insert_final_newline;
 	}
-	return void(0);
+	return void 0;
 }
 
 function check(settings: eclint.ISettings, document: doc.IDocument) {
@@ -25,16 +25,16 @@ function check(settings: eclint.ISettings, document: doc.IDocument) {
 	}
 	let message: string;
 	if (configSetting) {
-		message = 'expected final newline';
+		message = "expected final newline";
 	} else {
-		message = 'unexpected final newline';
+		message = "unexpected final newline";
 	}
 
 	const error = new EditorConfigError(message);
 	error.lineNumber = document.lines.length;
 	const lastLine: doc.Line = document.lines[document.lines.length - 1];
 	error.columnNumber = lastLine.text.length + lastLine.ending.length;
-	error.rule = 'insert_final_newline';
+	error.rule = "insert_final_newline";
 	error.source = lastLine.text + lastLine.ending;
 	return [error];
 }
@@ -48,10 +48,10 @@ function fix(settings: eclint.ISettings, document: doc.IDocument) {
 		return lastLine && !lastLine.text;
 	}
 	if (configSetting) {
-		const endOfLineSetting = settings.end_of_line || 'lf';
+		const endOfLineSetting = settings.end_of_line || "lf";
 		ending = newlines[endOfLineSetting];
 	} else {
-		ending = '';
+		ending = "";
 	}
 	while (hasFinalNewline()) {
 		document.lines.pop();
@@ -63,7 +63,7 @@ function fix(settings: eclint.ISettings, document: doc.IDocument) {
 			ending,
 			number: 1,
 			offset: 0,
-			text: '',
+			text: "",
 		});
 		document.lines.push(lastLine);
 	}
@@ -84,7 +84,7 @@ const InsertFinalNewlineRule: eclint.IDocumentRule = {
 	fix,
 	infer,
 	resolve,
-	type: 'DocumentRule',
+	type: "DocumentRule",
 };
 
 export = InsertFinalNewlineRule;
