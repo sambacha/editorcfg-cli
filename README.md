@@ -1,16 +1,10 @@
-# ECLint
+# editorcfg-cli
 
-[![Build Status](https://travis-ci.org/jedmao/eclint.svg?branch=master)](https://travis-ci.org/jedmao/eclint)
-[![npm version](https://badge.fury.io/js/eclint.svg)](http://badge.fury.io/js/eclint)
-[![codecov](https://codecov.io/gh/jedmao/eclint/branch/master/graph/badge.svg)](https://codecov.io/gh/jedmao/eclint)
-[![npm license](http://img.shields.io/npm/l/eclint.svg?style=flat-square)](https://www.npmjs.org/package/eclint)
-[![dependencies Status](https://david-dm.org/jedmao/eclint/status.svg)](https://david-dm.org/jedmao/eclint)
 
-[![npm](https://nodei.co/npm/eclint.svg?downloads=true)](https://nodei.co/npm/eclint/)
 
-## Introduction
+## overview
 
-ECLint is a tool for validating or fixing code that doesn't adhere to settings defined in `.editorconfig`. It also infers settings from existing code. See the [EditorConfig Project](http://editorconfig.org/) for details about the `.editorconfig` file.
+editorcfg-cli is a fork of `ECLint`. ECLint is a tool for validating or fixing code that doesn't adhere to settings defined in `.editorconfig`. It also infers settings from existing code. See the [EditorConfig Project](http://editorconfig.org/) for details about the `.editorconfig` file.
 
 This version of ECLint runs on [EditorConfig Core](https://www.npmjs.com/package/editorconfig) 0.15.x.
 
